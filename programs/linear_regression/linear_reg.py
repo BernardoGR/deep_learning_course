@@ -52,7 +52,7 @@ def initialize_params(num_params):
 def get_mean_error(params, x_set, y_set):
     error_acum = 0
     for i in range(len(x_set)):
-        y_hat = eval_h(params, x_set[i])
+        y_hat = predict(params, x_set[i])
         # print("x_set[i]:  %f,  y_set[i]:  %f,   y_hat:  %f" % (x_set[i][0], y_set[i], y_hat))
         # print( "y_hat  %f  y %f " % (y_hat,  y_set[i]))
         error = abs(y_hat - y_set[i])
@@ -64,12 +64,12 @@ def get_mean_error(params, x_set, y_set):
     return mean_error_param
 
 
-def eval_h(params, sample):
-    acum = 0
+def predict(params, sample):
+    y_hat = 0
     for i in range(len(params)):
         # evaluates h(x) = a+bx1+cx2+ ... nxn..
-        acum = acum + params[i]*sample[i]
-    return acum
+        y_hat += params[i] * sample[i]
+    return y_hat
 
 
 def train_model(l_rate, x_train_set, y_train_set, num_epochs):
@@ -83,7 +83,7 @@ def train_model(l_rate, x_train_set, y_train_set, num_epochs):
             acum = 0
             for i in range(len(x_train_set)):
                 # Sumatory part of the Gradient Descent formula for linear Regression.
-                acum += (eval_h(params, x_train_set[i]) - y_train_set[i]) * x_train_set[i][j]
+                acum += (predict(params, x_train_set[i]) - y_train_set[i]) * x_train_set[i][j]
             # Subtraction of original parameter value with learning rate included.
             params[j] = params[j] - (l_rate * (1/len(x_train_set)) * acum)
         mean_error = get_mean_error(params, x_train_set, y_train_set)
@@ -106,7 +106,7 @@ def train_model(l_rate, x_train_set, y_train_set, num_epochs):
 def test_model(x_test_set, params):
     result = []
     for i in range(0, len(x_test_set)):
-        y_hat = eval_h(params, x_test_set[i])
+        y_hat = predict(params, x_test_set[i])
         result.append(y_hat)
     return result
 
@@ -132,11 +132,11 @@ def main():
     # load and prepare data
     filename = 'data2.csv'
     dataset = np.array(load_csv(filename))
-    print(dataset.shape)
+    # print(dataset.shape)
 
     train, test = split_train_test(dataset, train_size)
-    print(train.shape)
-    print(test.shape)
+    # print(train.shape)
+    # print(test.shape)
 
     # separate y and x set. Add bias column
     for row in train:
@@ -179,7 +179,7 @@ def main():
 
     # test with single data instance
     print("\n-> Single instance prediction:")
-    print(eval_h(trained_params, [45.419730144973755,1]))
+    print(predict(trained_params, [45.419730144973755,1]))
     print("-> Single instance real value:")
     print(55.165677145959123)
 
