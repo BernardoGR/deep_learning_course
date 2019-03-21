@@ -108,7 +108,7 @@ def predict_set(x_set, params):
 def accuracy_metric(actual, predicted):
     correct = 0
     for i in range(len(actual)):
-        if actual[i] ==  round(predicted[i]):
+        if actual[i] == round(predicted[i]):
             correct += 1
     return correct / float(len(actual)) * 100.0
 
@@ -134,10 +134,13 @@ def main():
     # load and prepare data
     filename = 'pima-indians-diabetes.csv'
     dataset = np.array(load_csv(filename))
+    print("\ndataset.shape:")
     print(dataset.shape)
 
     train, test = split_train_test(dataset, train_size)
+    print("\ntrain.shape:")
     print(train.shape)
+    print("\ntest.shape:")
     print(test.shape)
 
     # separate y and x set. Add bias column
@@ -161,29 +164,19 @@ def main():
 
     # test model: train data
     result_train = predict_set(x_set, trained_params)
-    print("\n-> Predictions (train): ")
-    print(result_train)
-    print("-> Real Values (train): ")
-    print(y_set)
-    print("-> Accuracy (train): ")
-    print(accuracy_metric(y_set, result_train))
+    print("\n-> Accuracy (train): ")
+    print(str(round(accuracy_metric(y_set, result_train), 2)) + "%")
 
     # test model with unseen data
     result_test = predict_set(x_test_set, trained_params)
-    print("\n-> Test Predictions: ")
-    print(result_test)
-    print("-> Real Test Values: ")
-    print(y_test_set)
-    print("-> Accuracy (test): ")
-    print(accuracy_metric(y_test_set, result_test))
+    print("\n-> Accuracy (test): ")
+    print(str(round(accuracy_metric(y_test_set, result_test), 2)) + "%")
 
     # test with single data instance
-    '''
     print("\n-> Single instance prediction:")
-    print(predict(trained_params, [45.419730144973755, 1]))
+    print(predict(trained_params, [6,148,72,35,0,33.6,0.627,50,1]))
     print("-> Single instance real value:")
-    print(55.165677145959123)
-    '''
+    print(1)
 
     # plot square mean error
     '''

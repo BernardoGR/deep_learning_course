@@ -127,16 +127,19 @@ def main():
     y_test_set = []
     train_size = 0.9
     l_rate = 0.0001
-    num_epochs = 10000
+    num_epochs = 100
     
     # load and prepare data
-    filename = 'data2.csv'
+    filename = 'data.csv'
     dataset = np.array(load_csv(filename))
-    # print(dataset.shape)
+    print("\ndataset.shape:")
+    print(dataset.shape)
 
     train, test = split_train_test(dataset, train_size)
-    # print(train.shape)
-    # print(test.shape)
+    print("\ntrain.shape:")
+    print(train.shape)
+    print("\ntest.shape:")
+    print(test.shape)
 
     # separate y and x set. Add bias column
     for row in train:
@@ -153,27 +156,13 @@ def main():
         x_test_set.append(row_li)
 
     # train model
+    print("\ntraining params...")
     trained_params = train_model(l_rate, x_set, y_set, num_epochs)
     print("\n-> Final params: ")
     print(trained_params)
-    
-    # test model: train data
-    '''
-    result = test_model(x_set, trained_params)
-    print("\n-> Predictions (train): ")
-    print(result)
-    print("-> Real Values (train): ")
-    print(y_set)
-    '''
 
     # test model with unseen data
     result = test_model(x_test_set, trained_params)
-    '''
-    print("\n-> Test Predictions: ")
-    print(result)
-    print("-> Real Test Values: ")
-    print(y_test_set)
-    '''
     print("\n-> Test Error: ")
     print(get_mean_error(trained_params, x_test_set, y_test_set))
 
@@ -188,7 +177,7 @@ def main():
     plt.plot(num_epochs_error, __errors__)
     plt.show()
 
-    # plot data
+    # plot data and linear model
     plt.plot(dataset[:, 0], dataset[:, 1], 'ro')
     plt.axis([0, 100, 0, 140])
 
