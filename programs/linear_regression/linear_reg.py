@@ -99,7 +99,7 @@ def train_model(l_rate, x_train_set, y_train_set, num_epochs):
         if mean_error < 0.00001:
             print("\nMin error reached")
             break
-    print("\nepochs:  %f, final mean_error:  %f \nEnd of Training." % (epoch, mean_error))
+    print("\nepochs elapsed:  %f, final mean_error:  %f \nEnd of Training." % (epoch, mean_error))
     return params
 
  

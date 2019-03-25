@@ -91,7 +91,7 @@ def train_model(l_rate, x_train_set, y_train_set, num_epochs):
         if old_params == params:
             print("\nNo change in params, training finished")
             break
-    print("\nepochs:  %f\nEnd of Training." % epoch)
+    print("\nepochs elapsed:  %f\nEnd of Training." % epoch)
     return params
 
 
